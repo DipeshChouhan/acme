@@ -1,6 +1,7 @@
 #ifndef i486_CPU_H
 #define i486_CPU_H
 
+#include <cstdint>
 #include <stdint.h>
 
 typedef struct Cpu {
@@ -23,6 +24,35 @@ typedef struct Cpu {
   // debug registers
   uint32_t dr0, dr1, dr2, dr3, dr4, dr5, dr6, dr7;
   // memory management registers
+
+  // global descriptor table register
+  struct gdtr {
+    uint32_t base_address;
+    uint16_t segment_limit;
+  };
+
+  // local descriptor table register
+  struct ldtr {
+    uint32_t base_address;
+    uint16_t segment_limit;
+    uint16_t segment_selector;
+  };
+
+  // intterrupt descriptor table register
+  struct idtr {
+    uint32_t base_address;
+    uint16_t segment_limit;
+  };
+
+  // task register
+  // TODO: check for descriptor attributes
+  struct tr {
+    uint32_t base_address;
+    uint16_t segment_limit;
+    uint16_t segment_selector;
+    uint8_t descriptor_attributes;
+  };
+
 } Cpu;
 
 #endif
