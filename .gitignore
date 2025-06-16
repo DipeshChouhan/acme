@@ -2,8 +2,10 @@
 *.d
 
 # build folders and cache 
+.cache/
 build/
 /build*
+run.sh
 
 # Compiled Object files
 *.slo

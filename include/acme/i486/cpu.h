@@ -1,7 +1,6 @@
-#ifndef i486_CPU_H
-#define i486_CPU_H
+#ifndef ACME_i486_CPU_H
+#define ACME_i486_CPU_H
 
-#include <cstdint>
 #include <stdint.h>
 
 typedef struct Cpu {
@@ -38,7 +37,7 @@ typedef struct Cpu {
     uint16_t segment_selector;
   };
 
-  // intterrupt descriptor table register
+  // interrupt descriptor table register
   struct idtr {
     uint32_t base_address;
     uint16_t segment_limit;
