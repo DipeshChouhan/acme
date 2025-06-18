@@ -6,10 +6,10 @@
 typedef struct Cpu {
 
   // general registers
-  uint32_t eax, ebx, ecx, edx, esi, edi, ebp, esp;
+  uint32_t registers[8];
 
   // segment registers
-  uint16_t cs, ss, ds, es, fs, gs;
+  uint16_t segment_regs[6];
 
   // flags register
   uint32_t eflags;
@@ -18,10 +18,10 @@ typedef struct Cpu {
   uint32_t eip;
 
   // control registers
-  uint32_t cr0, cr1, cr2, cr3;
+  uint32_t control_regs[4];
 
   // debug registers
-  uint32_t dr0, dr1, dr2, dr3, dr4, dr5, dr6, dr7;
+  uint32_t debug_regs[8];
 
   // memory management registers
 
@@ -29,20 +29,20 @@ typedef struct Cpu {
   struct gdtr {
     uint32_t base_address;
     uint16_t segment_limit;
-  };
+  } gdtr;
 
   // local descriptor table register
   struct ldtr {
     uint32_t base_address;
     uint16_t segment_limit;
     uint16_t segment_selector;
-  };
+  } ldtr;
 
   // interrupt descriptor table register
   struct idtr {
     uint32_t base_address;
     uint16_t segment_limit;
-  };
+  } idtr;
 
   // task register
   // TODO: check for descriptor attributes
@@ -51,7 +51,7 @@ typedef struct Cpu {
     uint16_t segment_limit;
     uint16_t segment_selector;
     uint8_t descriptor_attributes;
-  };
+  } tr;
 
 } Cpu;
 
