@@ -55,4 +55,6 @@ typedef struct Cpu {
 
 } Cpu;
 
+void power_up_cpu(Cpu *cpu);
+
 #endif
