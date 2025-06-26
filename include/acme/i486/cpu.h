@@ -3,6 +3,45 @@
 
 #include <stdint.h>
 
+// this are indexs to the registers in registers and segment_regs array
+
+#define REG_EAX 0
+#define REG_EBX 1
+#define REG_ECX 2
+#define REG_EDX 3
+#define REG_ESI 4
+#define REG_EDI 5
+#define REG_EBP 6
+#define REG_ESP 7
+
+#define SEG_CS 0
+#define SEG_SS 1
+#define SEG_DS 2
+#define SEG_ES 3
+#define SEG_FS 4
+#define SEG_GS 5
+
+#define CR0 0
+#define CR1 1
+#define CR2 2
+#define CR3 3
+
+#define DR0 0
+#define DR1 1
+#define DR2 2
+#define DR3 3
+#define DR4 4
+#define DR5 5
+#define DR6 6
+#define DR7 7
+
+typedef struct InvisibleSegmentReg {
+  uint32_t base_address;
+  uint32_t segment_limit;
+  uint8_t type;
+  uint8_t other_info;
+} InvSegmentReg;
+
 typedef struct Cpu {
 
   // general registers
@@ -10,6 +49,8 @@ typedef struct Cpu {
 
   // segment registers
   uint16_t segment_regs[6];
+  // invisible parts of segment registers
+  InvSegmentReg segment_regs_inv[6];
 
   // flags register
   uint32_t eflags;
