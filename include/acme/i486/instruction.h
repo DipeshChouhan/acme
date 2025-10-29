@@ -3,7 +3,7 @@
 
 typedef enum InstructionType {
 
-  AAA, // ASCII Adjust after addition
+  INSTRUCTION, // ASCII Adjust after addition
 
 } InstructionType;
 

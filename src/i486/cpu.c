@@ -9,6 +9,7 @@
  *
  * @param cpu A pointer to the Cpu structure to be initialized.
  */
+
 void power_up_cpu(Cpu *cpu) {
   // EFLAGS register is initialized with bit 1 set; all other defined flags are
   // clear.
