@@ -5,7 +5,7 @@
 #include <acme/i486/cpu.h>
 #include <acme/i486/instruction.h>
 
-// TODO: Confirm SEG = ES, SEG  = SS and similar in opcode map then add it []
+// TODO: Confirm SEG = ES, SEG  = SS and similar in opcode map then add it [x] - an idiot you are [segment override prefixes]
 // TODO: Opcodes determinded by bits 5,4,3 of modR/M byte: []
 
 //  hey AI comment it better 
@@ -59,7 +59,7 @@ typedef enum OpcodeName {
   AND_AL_Ib,
   AND_eAX_Iv,
 
-  // NOTE: space for SEG = ES
+  PREFIX_SegOverride_ES,
   DAA,
   SUB_Eb_Gb,
   SUB_Ev_Gv,
@@ -68,7 +68,7 @@ typedef enum OpcodeName {
   SUB_AL_Ib,
   SUB_eAX_Iv,
 
-  // NOTE: space for SEG = CS
+  PREFIX_SegOverride_CS,
   DAS,
   XOR_Eb_Gb,
   XOR_Ev_Gv,
@@ -77,7 +77,7 @@ typedef enum OpcodeName {
   XOR_AL_Ib,
   XOR_eAX_Iv,
   
-  // NOTE: space for SEG = SS
+  PREFIX_SegOverride_SS,
   AAA,
   CMP_Eb_Gb,
   CMP_Ev_Gv,
@@ -86,7 +86,7 @@ typedef enum OpcodeName {
   CMP_AL_Ib,
   CMP_eAX_Iv,
 
-  // NOTE: space for SEG = DS
+  PREFIX_SegOverride_DS,
   AAS,
 
   // increment general purpose registers
@@ -133,8 +133,8 @@ typedef enum OpcodeName {
   POPA,
   BOUND_Gv_Ma,
   ARPL_Ew_Rw,
-  // NOTE: Space for SEG = FS
-  // NOTE: Space for SEG = GS
+  PREFIX_SegOverride_FS,
+  PREFIX_SegOverride_GS,
   PREFIX_Operand_Size,
   PREFIX_Address_Size,
 
@@ -143,9 +143,9 @@ typedef enum OpcodeName {
   PUSH_Ib,
   IMUL_GvEvIb,
   INSB_Yb_DX,
-  INSW__D_Yv_DX,  // TODO: what is the INSW/D find it []
+  INSW__D_Yv_DX,  // TODO: what is the INSW/D find it [x] - word or double word
   OUTSB_DX_Xb,
-  OUTSW__D_DX_Xv,  // TODO: what is the OUTSW/D find it []
+  OUTSW__D_DX_Xv,  // TODO: what is the OUTSW/D find it [x]
 
   // Short-displacement jump on condition (Jb)
   JCC_JO,
@@ -211,7 +211,7 @@ typedef enum OpcodeName {
   MOV_Ov_eAX,
 
   MOVSB_Xb_Yb,
-  MOVSW__D_Xv_Yv, // TODO: what is the /D find it []
+  MOVSW__D_Xv_Yv, // TODO: what is the /D find it [x]
   CMPSB_Xb_Yb,
   CMPSW__D_Xv_Yv, // TODO: same as above
 
@@ -274,13 +274,13 @@ typedef enum OpcodeName {
   XLAT,
 
   // ESC escape to coprocessor instruction set
-  ESC,
+  ESC_To_Coprocessor,
 
   LOOPNE_Jb,
   LOOPE_Jb,
   LOOP_Jb,
   JCXZ_Jb,
-  IN_AL_Ib, // TODO: check for AI or AL
+  IN_AL_Ib, // TODO: check for AI or AL - its AL - In out transers to register
   IN_eAX_Ib,
   OUT_Ib_AL,
   OUT_Ib_eAX,
