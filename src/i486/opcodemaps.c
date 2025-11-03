@@ -52,16 +52,75 @@ int one_byte_opcodemap[16][16] = {
 
     // Row A
     {MOV_AL_Ob, MOV_eAX_Ov, MOV_Ob_AL, MOV_Ov_eAX, MOVSB_Xb_Yb, MOVSW__D_Xv_Yv,
-    CMPSB_Xb_Yb, CMPSW__D_Xv_Yv, TEST_AL_Ib, TEST_eAX_Iv, STOSB_Yb_AL,
-    STOSW__D_Yv_eAX, LODSB_AL_Xb, LODSW__D_eAX_Xv, SCASB_AL_Xb, 
-    SCASW__D_eAX_Xv},
+     CMPSB_Xb_Yb, CMPSW__D_Xv_Yv, TEST_AL_Ib, TEST_eAX_Iv, STOSB_Yb_AL,
+     STOSW__D_Yv_eAX, LODSB_AL_Xb, LODSW__D_eAX_Xv, SCASB_AL_Xb,
+     SCASW__D_eAX_Xv},
 
     // Row B
-    {MOV_AL, MOV_CL, MOV_DL, MOV_BL, MOV_AH, MOV_CH, MOV_DH, MOV_BH,
-    MOV_eAX, MOV_eCX, MOV_eDX, MOV_eBX, MOV_eSP, MOV_eBP, MOV_eSI, MOV_eDI},
+    {MOV_AL, MOV_CL, MOV_DL, MOV_BL, MOV_AH, MOV_CH, MOV_DH, MOV_BH, MOV_eAX,
+     MOV_eCX, MOV_eDX, MOV_eBX, MOV_eSP, MOV_eBP, MOV_eSI, MOV_eDI},
 
     // ROW C
-    {Shift_Grp2_Eb_Ib, Shift_Grp2_Ev_Ib, RET_near_Iw, INCORRECT_OPCODE, 
-    LES_Gv_Mp, LDS_Gv_Mp, MOV_Eb_Ib, MOV_Ev_Iv, ENTER_Iw_Ib, LEAVE,
-    RET_far_Iw, INCORRECT_OPCODE, INT_3, INT_Ib, INTO, IRET},
-};
+    {Shift_Grp2_Eb_Ib, Shift_Grp2_Ev_Ib, RET_near_Iw, INCORRECT_OPCODE,
+     LES_Gv_Mp, LDS_Gv_Mp, MOV_Eb_Ib, MOV_Ev_Iv, ENTER_Iw_Ib, LEAVE, RET_far_Iw,
+     INCORRECT_OPCODE, INT_3, INT_Ib, INTO, IRET},
+
+    // Row D
+    {
+        Shift_Grp2_Eb_1,
+        Shift_Grp2_Ev_1,
+        Shift_Grp2_Eb_CL,
+        Shift_Grp2_Ev_CL,
+        AAM,
+        AAD,
+        INCORRECT_OPCODE,
+        XLAT,
+        ESC_To_Coprocessor,
+        ESC_To_Coprocessor,
+        ESC_To_Coprocessor,
+        ESC_To_Coprocessor,
+        ESC_To_Coprocessor,
+        ESC_To_Coprocessor,
+        ESC_To_Coprocessor,
+        ESC_To_Coprocessor,
+    },
+
+    // ROW E
+    {
+        LOOPNE_Jb,
+        LOOPE_Jb,
+        LOOP_Jb,
+        JCXZ_Jb,
+        IN_AL_Ib,
+        IN_eAX_Ib,
+        OUT_Ib_AL,
+        OUT_Ib_eAX,
+        CALL_Jv,
+        JMP_Jv,
+        JMP_AP,
+        JMP_Jb,
+        IN_AL_DX,
+        IN_eAX_DX,
+        OUT_DX_AL,
+        OUT_DX_eAX,
+    },
+
+    // Row F
+    {
+        LOCK,
+        INCORRECT_OPCODE,
+        REPNE,
+        REP_REPE,
+        HLT,
+        CMC,
+        Unary_Grp3_Eb,
+        Unary_Grp3_Ev,
+        CLC,
+        STC,
+        CLI,
+        STI,
+        CLD,
+        STD,
+        INC__DEC_Grp4,
+        INC__DEC_Grp5,
+    }};

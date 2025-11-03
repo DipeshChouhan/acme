@@ -411,6 +411,8 @@ typedef enum OpcodeName {
 
 extern int one_byte_opcodemap[16][16];
 
+extern int two_byte_opcodemap[16][16];
+
 DecoderStatus decode(Cpu *cpu, Instruction *instruction);
 
 #endif
