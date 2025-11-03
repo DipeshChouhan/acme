@@ -1,0 +1,67 @@
+#include <acme/i486/decoder.h>
+// NOTE: The order of the opcodes is important
+int one_byte_opcodemap[16][16] = {
+    // Row 0
+    {ADD_Eb_Gb, ADD_Ev_Gv, ADD_Gb_Eb, ADD_Gv_Ev, ADD_AL_Ib, ADD_eAX_Iv, PUSH_ES,
+     POP_ES, OR_Eb_Gb, OR_Ev_Gv, OR_Gb_Eb, OR_Gv_Ev, OR_AL_Ib, OR_eAX_Iv,
+     PUSH_CS, ESCAPE_2_byte},
+
+    // Row 1
+    {ADC_Eb_Gb, ADC_Ev_Gv, ADC_Gb_Eb, ADC_Gv_Ev, ADC_AL_Ib, ADC_eAX_Iv, PUSH_SS,
+     POP_SS, SBB_Eb_Gb, SBB_Ev_Gv, SBB_Gb_Eb, SBB_Gv_Ev, SBB_AL_Ib, SBB_eAX_Iv,
+     PUSH_DS, POP_DS},
+
+    // Row 2
+    {AND_Eb_Gb, AND_Ev_Gv, AND_Gb_Eb, AND_Gv_Ev, AND_AL_Ib, AND_eAX_Iv,
+     PREFIX_SegOverride_ES, DAA, SUB_Eb_Gb, SUB_Ev_Gv, SUB_Gb_Eb, SUB_Gv_Ev,
+     SUB_AL_Ib, SUB_eAX_Iv, PREFIX_SegOverride_CS, DAS},
+
+    // Row 3
+    {XOR_Eb_Gb, XOR_Ev_Gv, XOR_Gb_Eb, XOR_Gb_Ev, XOR_AL_Ib, XOR_eAX_Iv,
+     PREFIX_SegOverride_SS, AAA, CMP_Eb_Gb, CMP_Ev_Gv, CMP_Gb_Eb, CMP_Gv_Ev,
+     CMP_AL_Ib, CMP_eAX_Iv, PREFIX_SegOverride_DS, AAS},
+
+    // Row 4
+    {INC_eAX, INC_eCX, INC_eDX, INC_eBX, INC_eSP, INC_eBP, INC_eSI, INC_eDI,
+     DEC_eAX, DEC_eCX, DEC_eDX, DEC_eBX, DEC_eSP, DEC_eBP, DEC_eSI, DEC_eDI},
+
+    // Row 5
+    {PUSH_eAX, PUSH_eCX, PUSH_eDX, PUSH_eBX, PUSH_eSP, PUSH_eBP, PUSH_eSI,
+     PUSH_eDI, POP_eAX, POP_eCX, POP_eDX, POP_eBX, POP_eSP, POP_eBP, POP_eSI,
+     POP_eDI},
+
+    // Row 6
+    {PUSHA, POPA, BOUND_Gv_Ma, ARPL_Ew_Rw, PREFIX_SegOverride_FS,
+     PREFIX_SegOverride_GS, PREFIX_Operand_Size, PREFIX_Address_Size, PUSH_Iv,
+     IMUL_GvEvIv, PUSH_Ib, IMUL_GvEvIb, INSB_Yb_DX, INSW__D_Yv_DX, OUTSB_DX_Xb,
+     OUTSW__D_DX_Xv},
+
+    // Row 7
+    {JCC_JO, JCC_JNO, JCC_JB, JCC_JNB, JCC_JZ, JCC_JNZ, JCC_JBE, JCC_JNBE,
+     JCC_JS, JCC_JNS, JCC_JP, JCC_JNP, JCC_JL, JCC_JNL, JCC_JLE, JCC_JNLE},
+
+    // Row 8
+    {IMM_Grpl_Eb_Ib, IMM_Grpl_Ev_Iv, MOVB_AL_imm8, Grpl_Ev_Ib, TEST_Eb_Gb,
+     TEST_Ev_Gv, XCHG_Eb_Gb, XCHG_Ev_Gv, MOV_Eb_Gb, MOV_Ev_Gv, MOV_Gb_Eb,
+     MOV_Gv_Ev, MOV_Ew_Sw, LEA_Gv_M, MOV_Sw_Ew, POP_Ev},
+
+    // Row 9
+    {NOP, XCHG_eAX_eCX, XCHG_eAX_eDX, XCHG_eAX_eBX, XCHG_eAX_eSP, XCHG_eAX_eBP,
+     XCHG_eAX_eSI, XCHG_eAX_eDI, CBW, CWD, CALL_Ap, WAIT, PUSHF_Fv, POPF_Fv,
+     SAHF, LAHF},
+
+    // Row A
+    {MOV_AL_Ob, MOV_eAX_Ov, MOV_Ob_AL, MOV_Ov_eAX, MOVSB_Xb_Yb, MOVSW__D_Xv_Yv,
+    CMPSB_Xb_Yb, CMPSW__D_Xv_Yv, TEST_AL_Ib, TEST_eAX_Iv, STOSB_Yb_AL,
+    STOSW__D_Yv_eAX, LODSB_AL_Xb, LODSW__D_eAX_Xv, SCASB_AL_Xb, 
+    SCASW__D_eAX_Xv},
+
+    // Row B
+    {MOV_AL, MOV_CL, MOV_DL, MOV_BL, MOV_AH, MOV_CH, MOV_DH, MOV_BH,
+    MOV_eAX, MOV_eCX, MOV_eDX, MOV_eBX, MOV_eSP, MOV_eBP, MOV_eSI, MOV_eDI},
+
+    // ROW C
+    {Shift_Grp2_Eb_Ib, Shift_Grp2_Ev_Ib, RET_near_Iw, INCORRECT_OPCODE, 
+    LES_Gv_Mp, LDS_Gv_Mp, MOV_Eb_Ib, MOV_Ev_Iv, ENTER_Iw_Ib, LEAVE,
+    RET_far_Iw, INCORRECT_OPCODE, INT_3, INT_Ib, INTO, IRET},
+};

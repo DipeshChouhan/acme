@@ -6,12 +6,16 @@
 #include <acme/i486/instruction.h>
 
 // TODO: Confirm SEG = ES, SEG  = SS and similar in opcode map then add it [x] - an idiot you are [segment override prefixes]
-// TODO: Opcodes determinded by bits 5,4,3 of modR/M byte: []
+// TODO: Opcodes determinded by bits 5,4,3 of modR/M byte: [x] (cannot be implemented right now it will goes direct in opcode table)
+// NOTE Grp - Group instruction means actual instruction opcode determined by bits 5,4,3 of modR/M byte
 
 //  hey AI comment it better 
 // will be use inside opcode table to identify instruction type
 // NOTE: IMM - Immediate
 typedef enum OpcodeName {
+
+  INCORRECT_OPCODE,
+
   ADD_Eb_Gb,
   ADD_Ev_Gv,
   ADD_Gb_Eb,
@@ -139,7 +143,7 @@ typedef enum OpcodeName {
   PREFIX_Address_Size,
 
   PUSH_Iv,
-  IMUL_Gv_Ev_Iv,
+  IMUL_GvEvIv,
   PUSH_Ib,
   IMUL_GvEvIb,
   INSB_Yb_DX,
@@ -404,6 +408,8 @@ typedef enum OpcodeName {
   
 } OpcodeName;
 
+
+extern int one_byte_opcodemap[16][16];
 
 DecoderStatus decode(Cpu *cpu, Instruction *instruction);
 
