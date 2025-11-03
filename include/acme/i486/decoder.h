@@ -14,7 +14,7 @@
 // NOTE: IMM - Immediate
 typedef enum OpcodeName {
 
-  INCORRECT_OPCODE,
+  InvalidOp,
 
   ADD_Eb_Gb,
   ADD_Ev_Gv,

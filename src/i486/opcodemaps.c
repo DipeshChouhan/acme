@@ -61,9 +61,9 @@ int one_byte_opcodemap[16][16] = {
      MOV_eCX, MOV_eDX, MOV_eBX, MOV_eSP, MOV_eBP, MOV_eSI, MOV_eDI},
 
     // ROW C
-    {Shift_Grp2_Eb_Ib, Shift_Grp2_Ev_Ib, RET_near_Iw, INCORRECT_OPCODE,
+    {Shift_Grp2_Eb_Ib, Shift_Grp2_Ev_Ib, RET_near_Iw, InvalidOp,
      LES_Gv_Mp, LDS_Gv_Mp, MOV_Eb_Ib, MOV_Ev_Iv, ENTER_Iw_Ib, LEAVE, RET_far_Iw,
-     INCORRECT_OPCODE, INT_3, INT_Ib, INTO, IRET},
+     InvalidOp, INT_3, INT_Ib, INTO, IRET},
 
     // Row D
     {
@@ -73,7 +73,7 @@ int one_byte_opcodemap[16][16] = {
         Shift_Grp2_Ev_CL,
         AAM,
         AAD,
-        INCORRECT_OPCODE,
+        InvalidOp,
         XLAT,
         ESC_To_Coprocessor,
         ESC_To_Coprocessor,
@@ -108,7 +108,7 @@ int one_byte_opcodemap[16][16] = {
     // Row F
     {
         LOCK,
-        INCORRECT_OPCODE,
+        InvalidOp,
         REPNE,
         REP_REPE,
         HLT,
