@@ -205,3 +205,77 @@ int two_byte_opcodemap[16][16] = {
      InvalidOp, InvalidOp, InvalidOp, InvalidOp, InvalidOp, InvalidOp,
      InvalidOp, InvalidOp, InvalidOp, InvalidOp},
 };
+
+int group_opcodemap[8][8] = {
+  // Grp 1
+    {
+        Grp_ADD,
+        Grp_OR,
+        Grp_ADC,
+        Grp_SBB,
+        Grp_AND,
+        Grp_SUB,
+        Grp_XOR,
+        Grp_CMP,
+    },
+
+    // Grp 2
+    {
+        Grp_ROL,
+        Grp_ROR,
+        Grp_RCL,
+        Grp_RCR,
+        Grp_SHL,
+        Grp_SHR,
+        Grp_SHL,
+        Grp_SAR,
+    },
+
+    // Grp 3
+    {Grp_TEST_Ib__Iv, Grp_TEST_Ib__Iv, Grp_NOT, Grp_NEG, Grp_MUL_AL__eAX,
+     Grp_IMUL_AL__eAX, Grp_DIV_AL__eAX, Grp_IDIV_AL__eAX},
+
+    // Grp 4
+    {
+        Grp_INC_Eb,
+        Grp_DEC_Eb,
+        InvalidOp,
+        InvalidOp,
+        InvalidOp,
+        InvalidOp,
+        InvalidOp,
+        InvalidOp,
+    },
+
+    // Grp 5
+    {
+        Grp_INC_Ev,
+        Grp_IDEC_Ev,
+        Grp_CALL_Ev,
+        Grp_CALL_eP,
+        Grp_JMP_Ev,
+        Grp_JMP_Ep,
+        Grp_PUSH_Ev,
+        InvalidOp,
+    },
+
+    // Grp 6
+    {Grp_SLDT_Ew, Grp_STR_Ew, Grp_LLDT_Ew, Grp_LTR_Ew, Grp_VERR_Ew, Grp_VERW_Ew,
+     InvalidOp, InvalidOp},
+
+    // Grp 7
+    {
+        Grp_SGDT_Ms,
+        Grp_SIDT_Ms,
+        Grp_LGDT_Ms,
+        Grp_LIDT_Ms,
+        Grp_SMSW_Ew,
+        InvalidOp,
+        Grp_LMSW_Ew,
+        InvalidOp,
+    },
+
+    // Grp 8
+    {InvalidOp, InvalidOp, InvalidOp, InvalidOp, Grp_BT, Grp_BTS, Grp_BTR,
+     Grp_BTC},
+};

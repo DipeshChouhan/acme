@@ -5,11 +5,13 @@
 #include <acme/i486/cpu.h>
 #include <acme/i486/instruction.h>
 
-// TODO: Confirm SEG = ES, SEG  = SS and similar in opcode map then add it [x] - an idiot you are [segment override prefixes]
-// TODO: Opcodes determinded by bits 5,4,3 of modR/M byte: [x] (cannot be implemented right now it will goes direct in opcode table)
-// NOTE Grp - Group instruction means actual instruction opcode determined by bits 5,4,3 of modR/M byte
+// TODO: Confirm SEG = ES, SEG  = SS and similar in opcode map then add it [x] -
+// an idiot you are [segment override prefixes]
+// TODO: Opcodes determinded by bits 5,4,3 of modR/M byte: [x]
+// NOTE Grp - Group instruction means actual instruction opcode determined by
+// bits 5,4,3 of modR/M byte
 
-//  hey AI comment it better 
+//  hey AI comment it better
 // will be use inside opcode table to identify instruction type
 // NOTE: IMM - Immediate
 typedef enum OpcodeName {
@@ -80,7 +82,7 @@ typedef enum OpcodeName {
   XOR_Gb_Ev,
   XOR_AL_Ib,
   XOR_eAX_Iv,
-  
+
   PREFIX_SegOverride_SS,
   AAA,
   CMP_Eb_Gb,
@@ -147,9 +149,9 @@ typedef enum OpcodeName {
   PUSH_Ib,
   IMUL_GvEvIb,
   INSB_Yb_DX,
-  INSW__D_Yv_DX,  // TODO: what is the INSW/D find it [x] - word or double word
+  INSW__D_Yv_DX, // TODO: what is the INSW/D find it [x] - word or double word
   OUTSB_DX_Xb,
-  OUTSW__D_DX_Xv,  // TODO: what is the OUTSW/D find it [x]
+  OUTSW__D_DX_Xv, // TODO: what is the OUTSW/D find it [x]
 
   // Short-displacement jump on condition (Jb)
   JCC_JO,
@@ -223,12 +225,12 @@ typedef enum OpcodeName {
   TEST_eAX_Iv,
 
   STOSB_Yb_AL,
-  STOSW__D_Yv_eAX,  // TODO: same as above
+  STOSW__D_Yv_eAX, // TODO: same as above
   LODSB_AL_Xb,
-  LODSW__D_eAX_Xv,  // TODO: same as above
+  LODSW__D_eAX_Xv, // TODO: same as above
 
   SCASB_AL_Xb,
-  SCASW__D_eAX_Xv,  // TODO: same as above
+  SCASW__D_eAX_Xv, // TODO: same as above
 
   // MOV immediate byte into byte register
   MOV_AL,
@@ -249,7 +251,7 @@ typedef enum OpcodeName {
   MOV_eBP,
   MOV_eSI,
   MOV_eDI,
-  
+
   Shift_Grp2_Eb_Ib,
   Shift_Grp2_Ev_Ib,
   RET_near_Iw,
@@ -272,7 +274,7 @@ typedef enum OpcodeName {
 
   Shift_Grp2_Eb_CL,
   Shift_Grp2_Ev_CL,
-  
+
   AAM,
   AAD,
   XLAT,
@@ -405,13 +407,64 @@ typedef enum OpcodeName {
   BSWAP_EBP,
   BSWAP_ESI,
   BSWAP_EDI,
-  
+
+  // Opcodes determined by bits 5,4,3 of modR/M byte
+
+  Grp_ADD,
+  Grp_OR,
+  Grp_ADC,
+  Grp_SBB,
+  Grp_AND,
+  Grp_SUB,
+  Grp_XOR,
+  Grp_CMP,
+
+  Grp_ROL,
+  Grp_ROR,
+  Grp_RCL,
+  Grp_RCR,
+  Grp_SHL,
+  Grp_SHR,
+  Grp_SAR,
+
+  Grp_TEST_Ib__Iv,
+  Grp_NOT,
+  Grp_NEG,
+  Grp_MUL_AL__eAX,
+  Grp_IMUL_AL__eAX,
+  Grp_DIV_AL__eAX,
+  Grp_IDIV_AL__eAX,
+
+  Grp_INC_Eb,
+  Grp_DEC_Eb,
+  Grp_INC_Ev,
+  Grp_IDEC_Ev,
+  Grp_CALL_Ev,
+  Grp_CALL_eP,
+  Grp_JMP_Ev,
+  Grp_JMP_Ep,
+  Grp_PUSH_Ev,
+
+  Grp_SLDT_Ew,
+  Grp_STR_Ew,
+  Grp_LLDT_Ew,
+  Grp_LTR_Ew,
+  Grp_VERR_Ew,
+  Grp_VERW_Ew,
+
+  Grp_SGDT_Ms,
+  Grp_SIDT_Ms,
+  Grp_LGDT_Ms,
+  Grp_LIDT_Ms,
+  Grp_SMSW_Ew,
+  Grp_LMSW_Ew,
+  Grp_BT,
+  Grp_BTS,
+  Grp_BTR,
+  Grp_BTC,
+
 } OpcodeName;
 
-
-extern int one_byte_opcodemap[16][16];
-
-extern int two_byte_opcodemap[16][16];
 
 DecoderStatus decode(Cpu *cpu, Instruction *instruction);
 

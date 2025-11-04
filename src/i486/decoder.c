@@ -2,7 +2,11 @@
 
 // TODO : check for opcode map and opcodes and implement opcode table in decoder
 
-int onebyte_opcode_map[0xF][0xF] = {{}};
+extern int one_byte_opcodemap[16][16];
+
+extern int two_byte_opcodemap[16][16];
+
+extern int group_opcodemap[8][8];
 
 DecoderStatus decode(Cpu *cpu, Instruction *instruction) {
   return Decoder_FAIL;
