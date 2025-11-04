@@ -61,9 +61,9 @@ int one_byte_opcodemap[16][16] = {
      MOV_eCX, MOV_eDX, MOV_eBX, MOV_eSP, MOV_eBP, MOV_eSI, MOV_eDI},
 
     // ROW C
-    {Shift_Grp2_Eb_Ib, Shift_Grp2_Ev_Ib, RET_near_Iw, InvalidOp,
-     LES_Gv_Mp, LDS_Gv_Mp, MOV_Eb_Ib, MOV_Ev_Iv, ENTER_Iw_Ib, LEAVE, RET_far_Iw,
-     InvalidOp, INT_3, INT_Ib, INTO, IRET},
+    {Shift_Grp2_Eb_Ib, Shift_Grp2_Ev_Ib, RET_near_Iw, InvalidOp, LES_Gv_Mp,
+     LDS_Gv_Mp, MOV_Eb_Ib, MOV_Ev_Iv, ENTER_Iw_Ib, LEAVE, RET_far_Iw, InvalidOp,
+     INT_3, INT_Ib, INTO, IRET},
 
     // Row D
     {
@@ -124,3 +124,84 @@ int one_byte_opcodemap[16][16] = {
         INC__DEC_Grp4,
         INC__DEC_Grp5,
     }};
+
+int two_byte_opcodemap[16][16] = {
+    // Row 0
+    {Grp6, Grp7, LAR_Gv_Ew, LSL_Gv_Ew, InvalidOp, InvalidOp, CLTS, InvalidOp,
+     INVD, WBINVD, InvalidOp, InvalidOp, InvalidOp, InvalidOp, InvalidOp,
+     InvalidOp},
+
+    // Row 1
+    {InvalidOp, InvalidOp, InvalidOp, InvalidOp, InvalidOp, InvalidOp,
+     InvalidOp, InvalidOp, InvalidOp, InvalidOp, InvalidOp, InvalidOp,
+     InvalidOp, InvalidOp, InvalidOp, InvalidOp},
+
+    // Row 2
+    {MOV_Cd_Rd, MOV_Dd_Rd, MOV_Rd_Cd, MOV_Rd_Dd, MOV_Td_Rd, InvalidOp,
+     MOV_Rd_Td, InvalidOp, InvalidOp, InvalidOp, InvalidOp, InvalidOp,
+     InvalidOp, InvalidOp, InvalidOp, InvalidOp},
+
+    // Row 3
+    {InvalidOp, InvalidOp, InvalidOp, InvalidOp, InvalidOp, InvalidOp,
+     InvalidOp, InvalidOp, InvalidOp, InvalidOp, InvalidOp, InvalidOp,
+     InvalidOp, InvalidOp, InvalidOp, InvalidOp},
+
+    // Row 4
+    {InvalidOp, InvalidOp, InvalidOp, InvalidOp, InvalidOp, InvalidOp,
+     InvalidOp, InvalidOp, InvalidOp, InvalidOp, InvalidOp, InvalidOp,
+     InvalidOp, InvalidOp, InvalidOp, InvalidOp},
+
+    // Row 5
+    {InvalidOp, InvalidOp, InvalidOp, InvalidOp, InvalidOp, InvalidOp,
+     InvalidOp, InvalidOp, InvalidOp, InvalidOp, InvalidOp, InvalidOp,
+     InvalidOp, InvalidOp, InvalidOp, InvalidOp},
+
+    // Row 6
+    {InvalidOp, InvalidOp, InvalidOp, InvalidOp, InvalidOp, InvalidOp,
+     InvalidOp, InvalidOp, InvalidOp, InvalidOp, InvalidOp, InvalidOp,
+     InvalidOp, InvalidOp, InvalidOp, InvalidOp},
+
+    // Row 7
+    {InvalidOp, InvalidOp, InvalidOp, InvalidOp, InvalidOp, InvalidOp,
+     InvalidOp, InvalidOp, InvalidOp, InvalidOp, InvalidOp, InvalidOp,
+     InvalidOp, InvalidOp, InvalidOp, InvalidOp},
+
+    // Row 8
+    {JV_JO, JV_JNO, JV_JB, JV_JNB, JV_JZ, JV_JNZ, JV_JBE, JV_JNBE, JV_JS,
+     JV_JNS, JV_JP, JV_JNP, JV_JL, JV_JNL, JV_JLE, JV_JNLE},
+
+    // Row 9
+    {Eb_SETO, Eb_SETNO, Eb_SETB, Eb_SETNB, Eb_SETZ, Eb_SETNZ, Eb_SETBE,
+     Eb_SETNBE, Eb_SETS, Eb_SETNS, Eb_SETP, Eb_SETNP, Eb_SETL, Eb_SETNL,
+     Eb_SETLE, Eb_SETNLE},
+
+    // Row A
+    {PUSH_FS, POP_FS, InvalidOp, BT_Ev_Gv, SHLD_EvGvIb, SHLD_EvGvCL,
+     CMPXCHG_Eb_Gb, CMPXCHG_Ev_Gv, PUSH_GS, POP_GS, InvalidOp, BTS_Ev_Gv,
+     SHRD_EvGvIb, SHRD_EvGvCL, InvalidOp, IMUL_Gv_Ev},
+
+    // Row B
+    {InvalidOp, InvalidOp, LSS_Mp, BTR_Ev_Gv, LFS_Mp, LGS_Mp, MOVZX_Gv_Eb,
+     MOVZX_Gv_Ew, InvalidOp, InvalidOp, Grp8_Ev_Ib, BTC_Ev_Gv, BSF_Gv_Ev,
+     BSR_Gv_Ev, MOVSX_Gv_Eb, MOVSX_Gv_Ew},
+
+    // Row C
+    {XADD_Eb_Gb, XADD_Ev_Gv, InvalidOp, InvalidOp, InvalidOp, InvalidOp,
+     InvalidOp, InvalidOp, BSWAP_EAX, BSWAP_ECX, BSWAP_EDX, BSWAP_EBX,
+     BSWAP_ESP, BSWAP_EBP, BSWAP_ESI, BSWAP_EDI},
+
+    // Row D
+    {InvalidOp, InvalidOp, InvalidOp, InvalidOp, InvalidOp, InvalidOp,
+     InvalidOp, InvalidOp, InvalidOp, InvalidOp, InvalidOp, InvalidOp,
+     InvalidOp, InvalidOp, InvalidOp, InvalidOp},
+
+    // Row E
+    {InvalidOp, InvalidOp, InvalidOp, InvalidOp, InvalidOp, InvalidOp,
+     InvalidOp, InvalidOp, InvalidOp, InvalidOp, InvalidOp, InvalidOp,
+     InvalidOp, InvalidOp, InvalidOp, InvalidOp},
+
+    // Row F
+    {InvalidOp, InvalidOp, InvalidOp, InvalidOp, InvalidOp, InvalidOp,
+     InvalidOp, InvalidOp, InvalidOp, InvalidOp, InvalidOp, InvalidOp,
+     InvalidOp, InvalidOp, InvalidOp, InvalidOp},
+};
