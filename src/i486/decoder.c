@@ -8,6 +8,7 @@ extern int two_byte_opcodemap[16][16];
 
 extern int group_opcodemap[8][8];
 
+// TODO: implement decoder []
 DecoderStatus decode(Cpu *cpu, Instruction *instruction) {
   return Decoder_FAIL;
 }

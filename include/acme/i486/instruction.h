@@ -7,6 +7,7 @@ typedef enum InstructionType {
 
 } InstructionType;
 
+// NOTE: store pointers for source and destination 
 typedef struct Instruction {
   InstructionType inst_type; // type of instruction
 } Instruction;
