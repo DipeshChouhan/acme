@@ -1,7 +1,7 @@
 #ifndef ACME_i486_DECODER_H
 #define ACME_i486_DECODER_H
 
-#include <acme-util/status.h>
+#include "acme-util/acme_status.h"
 #include <acme/i486/cpu.h>
 #include <acme/i486/instruction.h>
 
@@ -466,6 +466,6 @@ typedef enum OpcodeName {
 } OpcodeName;
 
 
-DecoderStatus decode(Cpu *cpu, Instruction *instruction);
+AcmeStatus decode(Cpu *cpu, Instruction *instruction);
 
 #endif
