@@ -466,6 +466,9 @@ typedef enum OpcodeName {
 } OpcodeName;
 
 
+//NOTE: for testing decoder | temporary
+void init_decoder(uint8_t *instructions, int size);
+
 AcmeStatus decode(Cpu *cpu, Instruction *instruction);
 
 #endif
