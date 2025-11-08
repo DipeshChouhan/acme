@@ -16,7 +16,6 @@
 // NOTE: IMM - Immediate
 typedef enum OpcodeName {
 
-  InvalidOp,
 
   ADD_Eb_Gb,
   ADD_Ev_Gv,
@@ -462,6 +461,7 @@ typedef enum OpcodeName {
   Grp_BTS,
   Grp_BTR,
   Grp_BTC,
+  InvalidOp,
 
 } OpcodeName;
 
