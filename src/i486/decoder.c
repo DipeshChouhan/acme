@@ -4,9 +4,12 @@
 // NOTE: temporary fetch
 #define FETCH() 0
 
-#define GET_Opcodemap_row_col(opcode)                                          \
-  opcodemap_row = opcode >> 4;                                                 \
-  opcodemap_col = opcode & 0x0F
+// Dear gemini check for correctness of this function
+static inline void get_opcodemap_row_col(uint8_t opcode_byte, int *row,
+                                         int *col) {
+  *row = opcode_byte >> 4;
+  *col = opcode_byte & 0x0F;
+}
 
 // TODO : check for opcode map and opcodes and implement opcode table in decoder
 
@@ -29,11 +32,13 @@ AcmeStatus decode(Cpu *cpu, Instruction *instruction) {
   if (opcode == 0x0F) {
     // NOTE: Two byte opcodemap
     opcode = FETCH();
-    GET_Opcodemap_row_col(opcode);
+    get_opcodemap_row_col(opcode, &opcodemap_row,
+                          &opcodemap_col); // Use the inline function
     opcode_name = two_byte_opcodemap[opcodemap_row][opcodemap_col];
   } else {
     // NOTE: One byte opcodemap
-    GET_Opcodemap_row_col(opcode);
+    get_opcodemap_row_col(opcode, &opcodemap_row,
+                          &opcodemap_col); // Use the inline function
     opcode_name = one_byte_opcodemap[opcodemap_row][opcodemap_col];
   }
 
