@@ -1,5 +1,22 @@
+/**
+ * @file
+ * @brief Defines x86 opcode maps for one-byte, two-byte, and grouped opcodes.
+ *
+ * These maps are essential for the i486 instruction decoder,
+ * providing a structured lookup for instruction decoding based on opcode bytes.
+ */
 #include <acme/i486/decoder.h>
-// NOTE: The order of the opcodes is important
+
+/**
+ * @brief Lookup table for one-byte x86 opcodes.
+ *
+ * This 16x16 array maps the first byte of an opcode to its corresponding instruction.
+ * The row index represents the most significant nibble (bits 7-4) of the opcode byte,
+ * and the column index represents the least significant nibble (bits 3-0).
+ *
+ * Each entry is a symbolic constant (e.g., ADD_Eb_Gb) representing a specific x86 instruction.
+ * The order of these opcodes is critical for correct decoding.
+ */
 int one_byte_opcodemap[16][16] = {
     // Row 0
     {ADD_Eb_Gb, ADD_Ev_Gv, ADD_Gb_Eb, ADD_Gv_Ev, ADD_AL_Ib, ADD_eAX_Iv, PUSH_ES,
@@ -125,6 +142,15 @@ int one_byte_opcodemap[16][16] = {
         INC__DEC_Grp5,
     }};
 
+/**
+ * @brief Lookup table for two-byte x86 opcodes (prefixed with 0x0F).
+ *
+ * This 16x16 array is used for opcodes that begin with the 0x0F prefix.
+ * The row and column indices map to the second byte of the opcode, similar to
+ * the one_byte_opcodemap.
+ *
+ * Entries marked 'InvalidOp' indicate unused or reserved opcode combinations.
+ */
 int two_byte_opcodemap[16][16] = {
     // Row 0
     {Grp6, Grp7, LAR_Gv_Ew, LSL_Gv_Ew, InvalidOp, InvalidOp, CLTS, InvalidOp,
@@ -206,6 +232,18 @@ int two_byte_opcodemap[16][16] = {
      InvalidOp, InvalidOp, InvalidOp, InvalidOp},
 };
 
+/**
+ * @brief Lookup table for x86 grouped opcodes.
+ *
+ * This 8x8 array is used for instructions that are part of an opcode "group".
+ * These instructions share a common primary opcode byte, and their specific
+ * operation is further determined by the 'reg' field (bits 5-3) of the ModR/M byte.
+ *
+ * The first dimension (0-7) corresponds to the group number, and the second dimension (0-7)
+ * corresponds to the value of the 'reg' field within the ModR/M byte.
+ * For example, Grp1 (index 0) uses ModR/M to select ADD, OR, ADC, etc.
+ * Entries marked 'InvalidOp' indicate unused or reserved combinations within a group.
+ */
 int group_opcodemap[8][8] = {
   // Grp 1
     {
