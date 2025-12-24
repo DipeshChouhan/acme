@@ -11,7 +11,7 @@ static inline void get_opcodemap_row_col(uint8_t opcode_byte, int *row,
   *col = opcode_byte & 0x0F;
 }
 
-// TODO : check for opcode map and opcodes and implement opcode table in decoder
+// TODO : check for opcode map and opcodes and implement opcode table in decoder []
 
 extern int one_byte_opcodemap[16][16];
 
@@ -29,22 +29,26 @@ static int opcode_name = 0;
 
 AcmeStatus decode(Cpu *cpu, Instruction *instruction) {
   opcode = FETCH();
+  
   if (opcode == 0x0F) {
     // NOTE: Two byte opcodemap
     opcode = FETCH();
-    get_opcodemap_row_col(opcode, &opcodemap_row,
-                          &opcodemap_col); // Use the inline function
+    get_opcodemap_row_col(opcode, &opcodemap_row, &opcodemap_col);
     opcode_name = two_byte_opcodemap[opcodemap_row][opcodemap_col];
   } else {
     // NOTE: One byte opcodemap
-    get_opcodemap_row_col(opcode, &opcodemap_row,
-                          &opcodemap_col); // Use the inline function
+    get_opcodemap_row_col(opcode, &opcodemap_row, &opcodemap_col);
     opcode_name = one_byte_opcodemap[opcodemap_row][opcodemap_col];
   }
 
   // TODO: Implement decoding for this instructions now []
   switch (opcode_name) {
+    // TODO: start decoding from this instruction []
   case ADD_Eb_Gb:
+    //NOTE: direction is defined in opcode itself and explained in programming manual
+    // Add r/m8, r8 - means add reg byte to r/m byte
+    // here r/m is destination and reg is source
+    
     assert("not implemented");
     break;
 
