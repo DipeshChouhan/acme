@@ -10,18 +10,21 @@
 /**
  * @brief Lookup table for one-byte x86 opcodes.
  *
- * This 16x16 array maps the first byte of an opcode to its corresponding instruction.
- * The row index represents the most significant nibble (bits 7-4) of the opcode byte,
- * and the column index represents the least significant nibble (bits 3-0).
+ * This 16x16 array maps the first byte of an opcode to its corresponding
+ * instruction. The row index represents the most significant nibble (bits 7-4)
+ * of the opcode byte, and the column index represents the least significant
+ * nibble (bits 3-0).
  *
- * Each entry is a symbolic constant (e.g., ADD_Eb_Gb) representing a specific x86 instruction.
- * The order of these opcodes is critical for correct decoding.
+ * Each entry is a symbolic constant (e.g., ADD_Eb_Gb) representing a specific
+ * x86 instruction. The order of these opcodes is critical for correct decoding.
  */
+
+#define ESCAPE_2_byte_opcode_table 0
 int one_byte_opcodemap[16][16] = {
     // Row 0
     {ADD_Eb_Gb, ADD_Ev_Gv, ADD_Gb_Eb, ADD_Gv_Ev, ADD_AL_Ib, ADD_eAX_Iv, PUSH_ES,
      POP_ES, OR_Eb_Gb, OR_Ev_Gv, OR_Gb_Eb, OR_Gv_Ev, OR_AL_Ib, OR_eAX_Iv,
-     PUSH_CS, ESCAPE_2_byte},
+     PUSH_CS, ESCAPE_2_byte_opcode_table},
 
     // Row 1
     {ADC_Eb_Gb, ADC_Ev_Gv, ADC_Gb_Eb, ADC_Gv_Ev, ADC_AL_Ib, ADC_eAX_Iv, PUSH_SS,
@@ -34,7 +37,7 @@ int one_byte_opcodemap[16][16] = {
      SUB_AL_Ib, SUB_eAX_Iv, PREFIX_SegOverride_CS, DAS},
 
     // Row 3
-    {XOR_Eb_Gb, XOR_Ev_Gv, XOR_Gb_Eb, XOR_Gb_Ev, XOR_AL_Ib, XOR_eAX_Iv,
+    {XOR_Eb_Gb, XOR_Ev_Gv, XOR_Gb_Eb, XOR_Gv_Ev, XOR_AL_Ib, XOR_eAX_Iv,
      PREFIX_SegOverride_SS, AAA, CMP_Eb_Gb, CMP_Ev_Gv, CMP_Gb_Eb, CMP_Gv_Ev,
      CMP_AL_Ib, CMP_eAX_Iv, PREFIX_SegOverride_DS, AAS},
 
@@ -58,7 +61,7 @@ int one_byte_opcodemap[16][16] = {
      JCC_JS, JCC_JNS, JCC_JP, JCC_JNP, JCC_JL, JCC_JNL, JCC_JLE, JCC_JNLE},
 
     // Row 8
-    {IMM_Grpl_Eb_Ib, IMM_Grpl_Ev_Iv, MOVB_AL_imm8, Grpl_Ev_Ib, TEST_Eb_Gb,
+    {IMM_Grp1_Eb_Ib, IMM_Grp1_Ev_Iv, MOVB_AL_imm8, Grp1_Ev_Ib, TEST_Eb_Gb,
      TEST_Ev_Gv, XCHG_Eb_Gb, XCHG_Ev_Gv, MOV_Eb_Gb, MOV_Ev_Gv, MOV_Gb_Eb,
      MOV_Gv_Ev, MOV_Ew_Sw, LEA_Gv_M, MOV_Sw_Ew, POP_Ev},
 
@@ -237,46 +240,48 @@ int two_byte_opcodemap[16][16] = {
  *
  * This 8x8 array is used for instructions that are part of an opcode "group".
  * These instructions share a common primary opcode byte, and their specific
- * operation is further determined by the 'reg' field (bits 5-3) of the ModR/M byte.
+ * operation is further determined by the 'reg' field (bits 5-3) of the ModR/M
+ * byte.
  *
- * The first dimension (0-7) corresponds to the group number, and the second dimension (0-7)
- * corresponds to the value of the 'reg' field within the ModR/M byte.
- * For example, Grp1 (index 0) uses ModR/M to select ADD, OR, ADC, etc.
- * Entries marked 'InvalidOp' indicate unused or reserved combinations within a group.
+ * The first dimension (0-7) corresponds to the group number, and the second
+ * dimension (0-7) corresponds to the value of the 'reg' field within the ModR/M
+ * byte. For example, Grp1 (index 0) uses ModR/M to select ADD, OR, ADC, etc.
+ * Entries marked 'InvalidOp' indicate unused or reserved combinations within a
+ * group.
  */
 int group_opcodemap[8][8] = {
-  // Grp 1
+    // Grp 1
     {
-        Grp_ADD,
-        Grp_OR,
-        Grp_ADC,
-        Grp_SBB,
-        Grp_AND,
-        Grp_SUB,
-        Grp_XOR,
-        Grp_CMP,
+        Grp1_ADD,
+        Grp1_OR,
+        Grp1_ADC,
+        Grp1_SBB,
+        Grp1_AND,
+        Grp1_SUB,
+        Grp1_XOR,
+        Grp1_CMP,
     },
 
     // Grp 2
     {
-        Grp_ROL,
-        Grp_ROR,
-        Grp_RCL,
-        Grp_RCR,
-        Grp_SHL,
-        Grp_SHR,
-        Grp_SHL,
-        Grp_SAR,
+        Grp2_ROL,
+        Grp2_ROR,
+        Grp2_RCL,
+        Grp2_RCR,
+        Grp2_SHL,
+        Grp2_SHR,
+        Grp2_SHL,
+        Grp2_SAR,
     },
 
     // Grp 3
-    {Grp_TEST_Ib__Iv, Grp_TEST_Ib__Iv, Grp_NOT, Grp_NEG, Grp_MUL_AL__eAX,
-     Grp_IMUL_AL__eAX, Grp_DIV_AL__eAX, Grp_IDIV_AL__eAX},
+    {Grp3_TEST_Ib__Iv, UNDEFINED, Grp3_NOT, Grp3_NEG, Grp3_MUL_AL__eAX,
+     Grp3_IMUL_AL__eAX, Grp3_DIV_AL__eAX, Grp3_IDIV_AL__eAX},
 
     // Grp 4
     {
-        Grp_INC_Eb,
-        Grp_DEC_Eb,
+        Grp4_INC_Eb,
+        Grp4_DEC_Eb,
         InvalidOp,
         InvalidOp,
         InvalidOp,
@@ -287,33 +292,33 @@ int group_opcodemap[8][8] = {
 
     // Grp 5
     {
-        Grp_INC_Ev,
-        Grp_IDEC_Ev,
-        Grp_CALL_Ev,
-        Grp_CALL_eP,
-        Grp_JMP_Ev,
-        Grp_JMP_Ep,
-        Grp_PUSH_Ev,
+        Grp5_INC_Ev,
+        Grp5_IDEC_Ev,
+        Grp5_CALL_Ev,
+        Grp5_CALL_eP,
+        Grp5_JMP_Ev,
+        Grp5_JMP_Ep,
+        Grp5_PUSH_Ev,
         InvalidOp,
     },
 
     // Grp 6
-    {Grp_SLDT_Ew, Grp_STR_Ew, Grp_LLDT_Ew, Grp_LTR_Ew, Grp_VERR_Ew, Grp_VERW_Ew,
-     InvalidOp, InvalidOp},
+    {Grp6_SLDT_Ew, Grp6_STR_Ew, Grp6_LLDT_Ew, Grp6_LTR_Ew, Grp6_VERR_Ew,
+     Grp6_VERW_Ew, InvalidOp, InvalidOp},
 
     // Grp 7
     {
-        Grp_SGDT_Ms,
-        Grp_SIDT_Ms,
-        Grp_LGDT_Ms,
-        Grp_LIDT_Ms,
-        Grp_SMSW_Ew,
+        Grp7_SGDT_Ms,
+        Grp7_SIDT_Ms,
+        Grp7_LGDT_Ms,
+        Grp7_LIDT_Ms,
+        Grp7_SMSW_Ew,
         InvalidOp,
-        Grp_LMSW_Ew,
+        Grp7_LMSW_Ew,
         InvalidOp,
     },
 
     // Grp 8
-    {InvalidOp, InvalidOp, InvalidOp, InvalidOp, Grp_BT, Grp_BTS, Grp_BTR,
-     Grp_BTC},
+    {InvalidOp, InvalidOp, InvalidOp, InvalidOp, Grp8_BT, Grp8_BTS, Grp8_BTR,
+     Grp8_BTC},
 };
