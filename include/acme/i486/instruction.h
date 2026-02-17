@@ -2,22 +2,13 @@
 #define ACME_i486_INSTRUCTION_H
 
 #include <stdint.h>
-typedef enum InstructionType {
 
-  INSTRUCTION, // ASCII Adjust after addition
-
-} InstructionType;
-
-// NOTE: store pointers for source and destination 
+// NOTE: It only need to show instruction type and how to access other operands
 typedef struct Instruction {
-  InstructionType inst_type; // type of instruction
-  union {
-    uint8_t source_byte;
-    uint32_t source_word;
-    void *source_ptr;
-  };
-
-  void *destination_ptr;
+  int name; // type of instruction
+  uint8_t mod_field;
+  uint8_t reg_field;
+  uint8_t rm_field;
 } Instruction;
 
 #endif

@@ -13,8 +13,6 @@
 
 // NOTE: temporary fetch
 
-
-
 #define FETCH() 0
 
 static inline void get_opcodemap_row_col(uint8_t opcode_byte, int *row,
@@ -23,7 +21,16 @@ static inline void get_opcodemap_row_col(uint8_t opcode_byte, int *row,
   *col = opcode_byte & 0x0F;
 }
 
-// TODO : check for opcode map and opcodes and implement opcode table in decoder []
+static inline void fill_instruction_mod(Instruction *instruction, int inst_name,
+                                        int mod_byte) {
+  instruction->name = inst_name;
+  instruction->mod_field = get_mod_mod_field(mod_byte);
+  instruction->reg_field = get_mod_reg_field(mod_byte);
+  instruction->rm_field = get_mod_rm_field(mod_byte);
+}
+
+// TODO : check for opcode map and opcodes and implement opcode table in decoder
+// []
 
 extern int one_byte_opcodemap[16][16];
 
@@ -38,16 +45,16 @@ static int opcodemap_col = 0;
 static int opcode_name = 0;
 
 // TODO: implement decoder no testing required for now it's simple enough
+// NOTE: A decoder should be simple as it don't have to calcluate effective
+// address or any operands
+// it better left to execution unit
 
 AcmeStatus decode(Cpu *cpu, Instruction *instruction) {
 
   // Temporary variable to hold different mod fields
-  int tmp_reg_field = 0; 
-  int tmp_mod_field = 0;
-  int tmp_rm_field = 0;
   uint32_t tmp_reg = 0;
   opcode = FETCH();
-  
+
   if (opcode == 0x0F) {
     // NOTE: Two byte opcodemap
     opcode = FETCH();
@@ -63,77 +70,61 @@ AcmeStatus decode(Cpu *cpu, Instruction *instruction) {
   switch (opcode_name) {
     // TODO: start decoding from this instruction []
   case ADD_Eb_Gb:
-    //NOTE: direction is defined in opcode itself and explained in programming manual
-    // Add r/m8, r8 - means add reg byte to r/m byte
-    // here r/m is destination and reg is source
-    // Add Eb, Gb means add Gb to destination Eb
-    // byte operands regardless
+    // NOTE: direction is defined in opcode itself and explained in programming
+    // manual
+    //  Add r/m8, r8 - means add reg byte to r/m byte
+    //  here r/m is destination and reg is source
+    //  Add Eb, Gb means add Gb to destination Eb
+    //  byte operands regardless
 
-    //NOTE: Here E represents modR/M byte following opcode
-    opcode = FETCH(); // fetch modR/M byte
+    opcode = FETCH(); // get modR/M byte
 
-    tmp_reg_field = get_mod_reg_field(opcode); // reg field
-    tmp_mod_field = get_mod_mod_field(opcode); // mod field
-    tmp_rm_field = get_mod_rm_field(opcode); // rm field
-    // Can be AH, CH, DH, BH
-    if (tmp_reg_field > 3) {
-      tmp_reg = cpu->registers[tmp_reg_field % 4];
-      instruction->source_byte = (tmp_reg >> 8) & 0xFF;
-    } else {
-      // Can be AL, CL, DL, BL
-      tmp_reg = cpu->registers[tmp_reg_field];
-      instruction->source_byte = tmp_reg & 0xFF;
-    }
-
-    if (tmp_mod_field == 0b11) {
-      // register mode
-      // rm shows the destination
-      
-      // TODO: need to know which 8-bit register it points to like in EAX AL or AH
-      instruction->destination_ptr = &cpu->registers[tmp_rm_field % 4];
-    } else if (tmp_mod_field == 0b00) {
-      // memory mode no displacement follows
-
-    }
-
-
-    assert("not implemented");
+    fill_instruction_mod(instruction, ADD_Eb_Gb, opcode);
     break;
 
   case ADD_Ev_Gv:
-    assert("not implemented");
+    opcode = FETCH();
+    fill_instruction_mod(instruction, ADD_Ev_Gv, opcode);
     break;
 
   case ADD_Gb_Eb:
-    assert("not implemented");
+    opcode = FETCH();
+    fill_instruction_mod(instruction, ADD_Gb_Eb, opcode);
     break;
 
   case ADD_Gv_Ev:
-    assert("not implemented");
+    opcode = FETCH();
+    fill_instruction_mod(instruction, ADD_Gv_Ev, opcode);
     break;
 
   case ADD_AL_Ib:
-    assert("not implemented");
+    // a very simple instruction just followed by 8 bit source
+    // source added with AL register into AL register
+    instruction->name = ADD_AL_Ib;
     break;
 
   case ADD_eAX_Iv:
-    assert("not implemented");
+    instruction->name = ADD_eAX_Iv;
     break;
 
   case PUSH_ES:
-    assert("not implemented");
+    // only one byte instruction
+    instruction->name = PUSH_ES;
     break;
 
   case POP_ES:
-    assert("not implemented");
+    // only one byte instruction
+    instruction->name = POP_ES;
     break;
 
   case OR_Eb_Gb:
-    assert("not implemented");
+    opcode = FETCH();
+    fill_instruction_mod(instruction, OR_Eb_Gb, opcode);
     break;
 
   case OR_Ev_Gv:
-    assert("not implemented");
+    opcode = FETCH();
+    fill_instruction_mod(instruction, OR_Ev_Gv, opcode);
     break;
 
   default:

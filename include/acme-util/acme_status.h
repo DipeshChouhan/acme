@@ -5,6 +5,8 @@
 typedef enum AcmeStatus{
   Decoder_FAIL,
   Decoder_SUCCESS,
+  REAL_MODE,
+  PROTECTED_MODE
 } AcmeStatus;
 
 #endif
