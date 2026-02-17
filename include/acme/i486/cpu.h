@@ -1,6 +1,7 @@
 #ifndef ACME_i486_CPU_H
 #define ACME_i486_CPU_H
 
+#include <endian.h>
 #include <stdint.h>
 
 // this are indexs to the registers in registers and segment_regs array
@@ -75,6 +76,7 @@ typedef struct Cpu {
 
   // --- General Purpose Registers ---
   uint32_t registers[8]; ///< EAX, ECX, EDX, EBX, ESP, EBP, ESI, EDI
+
 
   // --- Segment Registers ---
   uint16_t segment_regs[6];          ///< CS, SS, DS, ES, FS, GS (selectors)
