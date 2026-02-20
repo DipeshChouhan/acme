@@ -813,6 +813,166 @@ AcmeStatus decode(Cpu *cpu, Instruction *instruction) {
     instruction->name = CMPSW__D_Xv_Yv;
     break;
 
+  case TEST_AL_Ib:
+    instruction->name = TEST_AL_Ib;
+    break;
+
+  case TEST_eAX_Iv:
+    instruction->name = TEST_eAX_Iv;
+    break;
+
+  case STOSB_Yb_AL:
+    instruction->name = STOSB_Yb_AL;
+    break;
+
+  case STOSW__D_Yv_eAX:
+    instruction->name = STOSW__D_Yv_eAX;
+    break;
+
+  case LODSB_AL_Xb:
+    instruction->name = LODSB_AL_Xb;
+    break;
+
+  case LODSW__D_eAX_Xv:
+    instruction->name = LODSW__D_eAX_Xv;
+    break;
+
+  case SCASB_AL_Xb:
+    instruction->name = SCASB_AL_Xb;
+    break;
+
+  case SCASW__D_eAX_Xv:
+    instruction->name = SCASW__D_eAX_Xv;
+    break;
+
+  case MOV_AL_imm8:
+    instruction->name = MOV_AL_imm8;
+    break;
+
+  case MOV_CL_imm8:
+    instruction->name = MOV_CL_imm8;
+    break;
+
+  case MOV_DL_imm8:
+    instruction->name = MOV_DL_imm8;
+    break;
+
+  case MOV_BL_imm8:
+    instruction->name = MOV_BL_imm8;
+    break;
+
+  case MOV_AH_imm8:
+    instruction->name = MOV_AH_imm8;
+    break;
+
+  case MOV_CH_imm8:
+    instruction->name = MOV_CH_imm8;
+    break;
+
+  case MOV_DH_imm8:
+    instruction->name = MOV_DH_imm8;
+    break;
+
+  case MOV_BH_imm8:
+    instruction->name = MOV_BH_imm8;
+    break;
+
+  case MOV_eAX_Iv:
+    instruction->name = MOV_eAX_Iv;
+    break;
+
+  case MOV_eCX_Iv:
+    instruction->name = MOV_eCX_Iv;
+    break;
+
+  case MOV_eDX_Iv:
+    instruction->name = MOV_eDX_Iv;
+    break;
+
+  case MOV_eBX_Iv:
+    instruction->name = MOV_eBX_Iv;
+    break;
+
+  case MOV_eSP_Iv:
+    instruction->name = MOV_eSP_Iv;
+    break;
+
+  case MOV_eBP_Iv:
+    instruction->name = MOV_eBP_Iv;
+    break;
+
+  case MOV_eSI_Iv:
+    instruction->name = MOV_eSI_Iv;
+    break;
+
+  case MOV_eDI_Iv:
+    instruction->name = MOV_eDI_Iv;
+    break;
+
+  case Shift_Grp2_Eb_Ib:
+    opcode = FETCH();
+    fill_instruction_mod(instruction, Shift_Grp2_Eb_Ib, opcode);
+    break;
+
+  case Shift_Grp2_Ev_Ib:
+    opcode = FETCH();
+    fill_instruction_mod(instruction, Shift_Grp2_Ev_Ib, opcode);
+    break;
+
+  case RET_near_Iw:
+    instruction->name = RET_near_Iw;
+    break;
+
+  case RET_near:
+    instruction->name = RET_near;
+    break;
+
+  case LES_Gv_Mp:
+    opcode = FETCH();
+    fill_instruction_mod(instruction, LES_Gv_Mp, opcode);
+    break;
+
+  case LDS_Gv_Mp:
+    opcode = FETCH();
+    fill_instruction_mod(instruction, LDS_Gv_Mp, opcode);
+    break;
+
+  case MOV_Eb_Ib:
+    opcode = FETCH();
+    fill_instruction_mod(instruction, MOV_Eb_Ib, opcode);
+    break;
+
+  case MOV_Ev_Iv:
+    opcode = FETCH();
+    fill_instruction_mod(instruction, MOV_Ev_Iv, opcode);
+    break;
+
+  case ENTER_Iw_Ib:
+    instruction->name = ENTER_Iw_Ib;
+    break;
+
+  case LEAVE:
+    instruction->name = LEAVE;
+    break;
+
+  case RET_far_Iw:
+    instruction->name = RET_far_Iw;
+    break;
+
+  case RET_far:
+    instruction->name = RET_far;
+    break;
+
+  case INT_3:
+    instruction->name = INT_3;
+    break;
+  case INT_Ib:
+    instruction->name = INT_Ib;
+    break;
+
+  case INTO:
+    instruction->name = INTO;
+    break;
   default:
     break;
   }
