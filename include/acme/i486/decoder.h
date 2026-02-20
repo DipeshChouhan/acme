@@ -14,6 +14,12 @@
 //  hey AI comment it better
 // will be use inside opcode table to identify instruction type
 // NOTE: IMM - Immediate
+
+typedef struct {
+  int opcode;
+  int has_modrm;
+} OpcodeEntry;
+
 typedef enum OpcodeName {
 
 
