@@ -57,3 +57,14 @@ void power_up_cpu(Cpu *cpu) {
   cpu->segment_regs_inv[SEG_ES].base_address = 0x0;
   cpu->segment_regs_inv[SEG_ES].segment_limit = 0xFFFF;
 }
+
+
+
+
+
+unsigned int execute_cycle(Cpu *cpu) {
+
+
+
+  return 0;
+}

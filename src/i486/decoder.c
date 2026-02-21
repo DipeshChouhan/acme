@@ -58,7 +58,7 @@ extern OpcodeEntry two_byte_opcodemap[16][16];
 extern int group_opcodemap[8][8];
 
 // they are globals specific to decoder
-static int opcode = 0;
+// static int opcode = 0;
 static int opcodemap_row = 0;
 static int opcodemap_col = 0;
 // static int opcode_name = 0;
@@ -68,28 +68,28 @@ static int opcodemap_col = 0;
 // address or any operands
 // it better left to execution unit
 
-AcmeStatus decode(Cpu *cpu, Instruction *instruction) {
+AcmeStatus decode(uint8_t opcode_byte, Instruction *instruction) {
 
   // Temporary variable to hold different mod fields
   uint32_t tmp_reg = 0;
   OpcodeEntry opcode_entry = {0};
-  opcode = FETCH();
+  // opcode = FETCH();
 
-  if (opcode == 0x0F) {
+  if (opcode_byte == 0x0F) {
     // NOTE: Two byte opcodemap
-    opcode = FETCH();
-    get_opcodemap_row_col(opcode, &opcodemap_row, &opcodemap_col);
+    opcode_byte = FETCH();
+    get_opcodemap_row_col(opcode_byte, &opcodemap_row, &opcodemap_col);
     opcode_entry = two_byte_opcodemap[opcodemap_row][opcodemap_col];
   } else {
     // NOTE: One byte opcodemap
-    get_opcodemap_row_col(opcode, &opcodemap_row, &opcodemap_col);
+    get_opcodemap_row_col(opcode_byte, &opcodemap_row, &opcodemap_col);
     opcode_entry = one_byte_opcodemap[opcodemap_row][opcodemap_col];
   }
 
   if (opcode_entry.has_modrm) {
     // NOTE: ModR/M byte
-    opcode = FETCH();
-    fill_instruction_mod_only(instruction, opcode);
+    opcode_byte = FETCH();
+    fill_instruction_mod_only(instruction, opcode_byte);
   } else {
     instruction->name = opcode_entry.opcode;
   }

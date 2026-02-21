@@ -145,4 +145,14 @@ typedef struct Cpu {
  */
 void power_up_cpu(Cpu *cpu);
 
+/**
+ * @brief Executes a single CPU cycle.
+ *
+ * This function simulates a single CPU cycle by executing the next instruction
+ * and updating the CPU state accordingly.
+ * @param cpu A pointer to the Cpu struct representing the CPU state.
+ * @return The number of cycles executed.
+ */
+unsigned int execute_cycle(Cpu *cpu);
+
 #endif

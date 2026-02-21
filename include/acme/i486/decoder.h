@@ -483,6 +483,14 @@ typedef enum OpcodeName {
 //NOTE: for testing decoder | temporary
 void init_decoder(uint8_t *instructions, int size);
 
-AcmeStatus decode(Cpu *cpu, Instruction *instruction);
+/**
+ * @brief Decodes an instruction from the provided opcode byte and populates the
+ * provided Instruction struct with the decoded information.
+ *
+ * @param opcode_byte The opcode byte to be decoded.
+ * @param instruction A pointer to the Instruction struct to be populated.
+ */
+
+AcmeStatus decode(uint8_t opcode_byte, Instruction *instruction);
 
 #endif
