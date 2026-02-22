@@ -48,8 +48,7 @@ static inline void fill_instruction_mod_only(Instruction *instruction,
   instruction->rm_field = get_mod_rm_field(mod_byte);
 }
 
-// TODO : check for opcode map and opcodes and implement opcode table in decoder
-// []
+// TODO : check for opcode map and opcodes and implement opcode table in decoder [x]
 
 extern OpcodeEntry one_byte_opcodemap[16][16];
 
